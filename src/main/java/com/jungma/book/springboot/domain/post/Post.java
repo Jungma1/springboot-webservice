@@ -1,5 +1,6 @@
 package com.jungma.book.springboot.domain.post;
 
+import com.jungma.book.springboot.domain.BaseTimeEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Entity // 테이블과 매핑될 클래스임을 나타냄
-public class Post {
+public class Post extends BaseTimeEntity {
 
     @Id // PK 필드
     @GeneratedValue(strategy = GenerationType.IDENTITY) // PK 생성 규칙
