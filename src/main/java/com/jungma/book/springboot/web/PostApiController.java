@@ -5,6 +5,7 @@ import com.jungma.book.springboot.web.dto.PostCreateRequest;
 import com.jungma.book.springboot.web.dto.PostResponse;
 import com.jungma.book.springboot.web.dto.PostUpdateRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,11 @@ public class PostApiController {
 
     private final PostService postService;
 
+    @GetMapping("/api/v1/posts/{id}")
+    public PostResponse findById(@PathVariable Long id) {
+        return postService.findById(id);
+    }
+
     @PostMapping("/api/v1/posts")
     public Long save(@RequestBody PostCreateRequest postCreateRequest) {
         return postService.save(postCreateRequest);
@@ -28,8 +34,9 @@ public class PostApiController {
         return postService.update(id, postUpdateRequest);
     }
 
-    @GetMapping("/api/v1/posts/{id}")
-    public PostResponse findById(@PathVariable Long id) {
-        return postService.findById(id);
+    @DeleteMapping("/api/v1/posts/{id}")
+    public Long delete(@PathVariable Long id) {
+        postService.delete(id);
+        return id;
     }
 }

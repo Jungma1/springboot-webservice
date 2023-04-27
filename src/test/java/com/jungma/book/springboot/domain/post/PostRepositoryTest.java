@@ -59,7 +59,7 @@ class PostRepositoryTest {
         // then
         Post post = posts.get(0);
 
-        // isAfter - 엔티티의 날짜가 파라미터의 날짜보다 이후인지 판단
+        // isAfter - 엔티티의 날짜가 파라미터의 날짜보다 1이후인지 판단
         assertThat(post.getCreatedDate()).isAfter(now);
         assertThat(post.getLastModifiedDate()).isAfter(now);
     }
