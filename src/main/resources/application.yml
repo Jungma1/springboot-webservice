@@ -1,0 +1,20 @@
+spring:
+  profiles:
+    include:
+      - oauth
+  datasource:
+    hikari:
+      jdbc-url: jdbc:h2:tcp://localhost/~/Desktop/Study/h2/test
+      username: sa
+      password:
+      driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+server:
+  servlet:
+    encoding:
+      force: true
