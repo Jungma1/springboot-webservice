@@ -13,7 +13,11 @@ spring:
       ddl-auto: create
     properties:
       hibernate:
-        format_sql: true
+        format_sql:
+  session:
+    jdbc:
+      # 스프링 세션 테이블 생성 (개발 환경)
+      initialize-schema: always
 server:
   servlet:
     encoding:

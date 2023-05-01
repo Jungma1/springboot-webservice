@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
+@Transactional(readOnly = true) // 조회 기능만 남겨두어 조회 속도 개선
 @Service
 public class PostService {
 
@@ -39,7 +40,6 @@ public class PostService {
         return new PostResponse(post);
     }
 
-    @Transactional(readOnly = true) // 조회 기능만 남겨두어 조회 속도 개선
     public List<PostListResponse> findAllDesc() {
         return postRepository.findAllByOrderByIdDesc().stream()
                 .map(PostListResponse::new)
