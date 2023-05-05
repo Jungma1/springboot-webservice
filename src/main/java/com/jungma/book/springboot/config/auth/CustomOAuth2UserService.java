@@ -51,6 +51,9 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         // User 클래스의 직렬화 코드를 넣을 경우 다른 엔티티와 관계(OneToMany, ManyToOne 등)가 형성되면 직렬화 대상에 자식들까지 포함되니 성능 이슈, 부수 효과가 발생할 확률이 높다.
         httpSession.setAttribute("user", new SessionUser(user));
 
+        // DefaultOAuth2User : OAuth2User 의 구현체이다.
+        // attributes.getNameAttributeKey() - 구글(sub), 네이버(id), 카카오(id) 등에 따라서 달라진다.
+        // application-oauth.yml 에서 설정한 네이버 로그인의 기본 user-name-attribute 는 "response" 이다. (response.[id])
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(user.getRoleKey())),
                 attributes.getAttributes(),
