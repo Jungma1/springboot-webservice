@@ -6,17 +6,26 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.jungma.book.springboot.config.auth.SecurityConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-@WebMvcTest(HelloController.class)
+@WebMvcTest(controllers = HelloController.class, excludeFilters = {
+        // SecurityConfig 는 읽었지만, SecurityConfig 를 생성하기 위해 필요한 CustomOAuth2UserService 는 읽을 수 없어서 오류가 발생한다.
+        // 따라서, 스캔 대상에서 SecurityConfig 를 제거한다.
+        @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)
+})
 class HelloControllerTest {
 
     @Autowired
     private MockMvc mvc;
 
+    @WithMockUser(roles = "USER")
     @Test
     void hello_return() throws Exception {
         String hello = "hello";
@@ -26,6 +35,7 @@ class HelloControllerTest {
                 .andExpect(content().string(hello)); // 응답 본문의 내용을 검증
     }
 
+    @WithMockUser(roles = "USER")
     @Test
     void helloDto_return() throws Exception {
         String name = "hello";
